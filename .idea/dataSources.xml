@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1002957432">
+    <data-source source="LOCAL" name="Django default" uuid="a3a8dee3-8dcb-4b9e-a822-e2432bca1c4a">
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3310/timetable</jdbc-url>
+      <user-name>mwas</user-name>
+      <user-password>dfc7dfcbdfc6dfc1dfc3dfcbdf9cdf9f</user-password>
+      <libraries>
+        <library>
+          <url>file://</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

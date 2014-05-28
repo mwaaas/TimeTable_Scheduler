@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Time Table Scheduler</title>
+{% load string_manupulation %}
+{%  load set_var %}
+<script type="text/javascript"><!--
+    /* Script by: www.jtricks.com
+     * Version: 20090221
+     * Latest version:
+     * www.jtricks.com/javascript/blocks/showinghiding.html
+     */
+    function showPageElement(what)
+    {
+        var obj = typeof what == 'object'
+                ? what : document.getElementById(what);
+
+        obj.style.display = 'block';
+        return false;
+    }
+
+    function hidePageElement(what)
+    {
+        var obj = typeof what == 'object'
+                ? what : document.getElementById(what);
+
+        obj.style.display = 'none';
+        return false;
+    }
+
+    function togglePageElementVisibility(what)
+    {
+        var obj = typeof what == 'object'
+                ? what : document.getElementById(what);
+
+        if (obj.style.display == 'none')
+            obj.style.display = 'block';
+        else
+            obj.style.display = 'none';
+        return false;
+    }
+
+    //--></script>
+
+<link href="file:///C|/Users/mwas/PycharmProjects/TimeTable_Scheduler/timetable/static/timetable/customCss.css" rel="stylesheet" type="text/css">
+
+
+{% load staticfiles %}
+<link href="{%static 'timetable/jquery.ui.core.min.css'%}" rel="stylesheet" type="text/css">
+<link href="{%static 'timetable/jquery.ui.theme.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{%static 'timetable/jquery.ui.tabs.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{%static 'timetable/jquery.ui.button.min.css' %}" rel="stylesheet" type="text/css">
+<script src="{%static 'timetable/jquery-1.8.3.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'timetable/jquery-ui-1.9.2.tabs.custom.min.js' %}" type="text/javascript"></script>
+<script src="{%static 'timetable/jquery-ui-1.9.2.button.custom.min.js' %}" type="text/javascript"></script>
+<link href="{% static 'timetable/customCss.css' %}" rel="stylesheet" type="text/css">
+
+
+<!--
+<link href="./Time Table Scheduler_files/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+<link href="./Time Table Scheduler_files/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+<link href="./Time Table Scheduler_files/jquery.ui.tabs.min.css" rel="stylesheet" type="text/css">
+<link href="./Time Table Scheduler_files/jquery.ui.button.min.css" rel="stylesheet" type="text/css">
+<script src="./Time Table Scheduler_files/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="./Time Table Scheduler_files/jquery-ui-1.9.2.tabs.custom.min.js" type="text/javascript"></script>
+<script src="./Time Table Scheduler_files/jquery-ui-1.9.2.button.custom.min.js" type="text/javascript"></script>
+<link href="file:///C|/Users/mwas/PycharmProjects/TimeTable_Scheduler/timetable/static/timetable/custom.css" rel="stylesheet" type="text/css">
+-->
+
+
+</head>
+<body>
+<div class="title">
+
+  <p class = "headingText" >Just feed in the student groups , lecture and units taught information and all will be scheduled for you   </p>
+</div>
+<script>
+    $(document).ready(function() {
+        {% if elementId %}
+               {% for a in elementId %}
+                   showPageElement('{{ a }}')
+               {% endfor %}
+        {% endif %}
+
+        {% if tab %}
+            window.location.href = "{{ tab }}"
+
+        {% endif %}
+
+
+
+
+    })
+</script>
+
+<div id="Tabs1">
+     <ul>
+        <li><a href="#tabs-1">Unit taught</a></li>
+        <li><a href="#tabs-2">Student Groups</a></li>
+        <li><a href="#tabs-3">Lecturer</a></li>
+        <li><a href="#tabs-4">Lecture room</a></li>
+        </ul>
+  <div id="tabs-1">
+
+      <article class="units">
+
+          <button onclick="togglePageElementVisibility(document.getElementById('addUnit'))">
+              add unit
+          </button>
+
+          <div class = "subForm" id="addUnit">
+              <form action = {% url "add_unit_view"%} method = "post" style="margin-right: 5%">
+		            {% csrf_token %}
+		            {{addUnitForm.as_p}}
+                    <input type="submit" value="save" />
+              </form>
+              <button  onclick="hidePageElement(document.getElementById('addUnit'))">
+                            exit
+              </button>
+          </div>
+          {% if unit_information %}
+   		        <table width="491" border="0">
+                    {% for b in unit_information %}
+                	    <tr>
+                    	    <td width="20%">{{b.unitCode}}</td>
+    					    <td width="5">{{b.unitHours}}</td>
+    					    <td width="60">{{b.unitName}}</td>
+                            <td width="5%">
+                                <a href={% url "update_page" b.unitCode %}>
+                                    edit
+                                </a>
+                            </td>
+                            <td width="5%">
+                                <a href={% url "delete_unit_view"   b.unitCode  %}>
+                                    delete
+                                </a>
+                            </td>
+  					    </tr>
+
+                        {% data_in_context b.unitCode as true %}
+                        {% if true %}
+                            <tr>
+                                <div class = "subForm" id="{{ b.unitCode}}">
+                                    <form action = {% url "update_unit" b.unitCode%} method = "post" >
+		                                {% csrf_token %}
+                                        {% getContext b.unitCode  as update_form %}
+		                                {{update_form.as_p}}
+		                                <input type="submit" value="update" />
+                                    </form>
+
+                                    <button  onclick="hidePageElement(document.getElementById('{{ b.unitCode}}'))">
+                                        exit
+                                    </button>
+                                </div>
+                            </tr>
+                        {% endif %}
+                {% endfor %}
+               </table>
+
+          {% else %}
+               <p> No Group added to the database </p>
+          {% endif %}
+
+      </article>
+  </div>
+  <div id="tabs-2">
+
+          <article class="studentGroupArticle">
+               <button onclick="togglePageElementVisibility(document.getElementById('addGroup'))">
+                    Add group
+               </button>
+               <div id = "addGroup" class="subForm">
+                    <form action ={%  url "add_group_view" %} method = "post" >
+                        {% csrf_token %}
+		                {{addGroupForm.as_p}}
+                        <input type="submit" value="save" />
+
+                    </form>
+                   <button  onclick="hidePageElement(document.getElementById('addGroup'))">
+                            exit
+                   </button>
+               </div>
+              {% if group_information %}
+
+                  {% for a in group_information %}
+                        <table  width="80%" border="0" >
+                            <tr>
+                                <td width = "40%">{{a.groupName}} </td>
+                                <td width="5%">{{a.groupCapacity}}</td>
+                                <td width="25%">{{a.groupId}}</td>
+                                <td width="15%"><a href="javascript:togglePageElementVisibility(document.getElementById( '{{ a.groupId|add:"mwas"  }}' ))">
+                                                        show/hide units
+                                                 </a>
+                                </td>
+                                <td widht = "5%">
+                                        <a href={% url "update_group_page" a.groupId %}> edit </a>
+                                </td>
+
+                                <td widht = "5%">
+                                        <a href={%url 'delete_group' a.groupId %}> delete </a>
+                                 </td>
+                            </tr>
+                        </table>
+
+                      <div id = "{{a.groupId}}" class = "subForm">
+                            <form   action={% url "add_group_unit_view" a.groupId %} method = "post" >
+                                {% csrf_token %}
+
+                                {% addString a.groupId "form" as mwas %}
+                                {{ mwas.as_p }}
+                                <input type="submit" value="save"/>
+                            </form>
+                            <button  onclick="hidePageElement(document.getElementById('{{a.groupId}}'))">
+                            exit
+                            </button>
+                      </div>
+
+                      <div class="subForm" id = "{{ a.groupId|add:"mwas" }}" >
+                            <button onclick="togglePageElementVisibility(document.getElementById('{{ a.groupId }}'))">
+                                Add units
+                            </button>
+
+                          {% getContext a.groupId as groupUnit %}
+
+                            <table>
+                            {% for unit_group in groupUnit %}
+                                <tr>
+                                    <td  width = "20%">{{ unit_group.unitCode.unitCode}} </td>
+                                    <td width = "40%"> {{ unit_group.unitCode.unitName }} </td>
+                                    <td width = "10%"> {{ unit_group.unitCode.unitHours }} </td>
+                                    <td width = "20%">   {{ unit_group.lecture.lectureName }}</td>
+                                    <td width = "10%"> <a href={% url "delete_group_unit" unit_group.group.groupId  unit_group.unitCode.unitCode %}>
+                                        delete
+                                    </a></td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                      </div>
+                      {% concatenateString a.groupId  'form'  as group_update_form_name %}
+                      {% data_in_context group_update_form_name as dataIn %}
+                      {% if dataIn %}
+                          <div class="subForm" id = "{{ a.groupId|add:"franco" }}" >
+                            <form action ={%  url "update_group" a.groupId %} method = "post" >
+                                {% csrf_token %}
+		                        {% getContext group_update_form_name as groupUpdateForm %}
+                                {{ groupUpdateForm.as_p }}
+                                <input type="submit" value="update" />
+                            </form>
+                            <button  onclick="hidePageElement(document.getElementById('{{ a.groupId|add:"franco" }}'))">
+                                exit
+                            </button>
+
+                          </div>
+                      {% endif %}
+                  {% endfor %}
+              {% else %}
+                       <p> No units added to the database </p>
+              {% endif %}
+          </article>
+  </div>
+  <div id="tabs-3">
+
+      <article class="lectureArticle">
+          <button onclick="togglePageElementVisibility(document.getElementById('addLecture'))">
+                    Add Lecture
+          </button>
+          <div class="subForm" id = "addLecture" style = "display: none">
+                <form action = {% url "add_lecture_view" %} method = "post" >
+                       {% csrf_token %}
+                       {{addLectureForm.as_p}}
+                       <input type="submit" value="save" />
+       	        </form>
+                <button  onclick="hidePageElement(document.getElementById('addLecture'))">
+                            exit
+                </button>
+          </div>
+          {% if lecture_information %}
+
+                {% for lecture in lecture_information%}
+                    <table width="491" border="0">
+                        <tr>
+                            <td width = "40%">{{ lecture.lectureName }}</td>
+                            <td width = "30%"> {{ lecture.lectureId }}</td>
+                            <td width = "30%"> <a href="javascript:togglePageElementVisibility(document.getElementById( '{{ lecture.lectureId|add:"mwas" }}' ))">show/hide units</a></td>
+                            <td width ="5%"> <a href = {% url 'update_lecture_page' lecture.lectureId %}>edit</a></td>
+                            <td width = "5%"> <a href = {% url 'delete_lecture' lecture.lectureId %}>delete</a></td>
+
+                        </tr>
+                    </table>
+
+                    <div  class="subForm" id="{{ lecture.lectureId }}"  >
+                        <form action ={%  url 'add_lecture_unit_view' lecture.lectureId%} method = "post" >
+		                    {% csrf_token %}
+
+                            {% addString lecture.lectureId "form" as lecUnitForm %}
+		                    {{lecUnitForm.as_p}}
+		                    <input type="submit" value="save" />
+                        </form>
+                        <button  onclick="hidePageElement(document.getElementById('{{lecture.lectureId }}'))">
+                            exit
+                        </button>
+
+                    </div>
+
+                    <div class = "subForm" id="{{ lecture.lectureId|add:"mwas" }}">
+                         <button onclick="togglePageElementVisibility(document.getElementById('{{ lecture.lectureId }}'))">
+                             add lecturer units
+                         </button>
+
+                        {% getContext lecture.lectureId as lectureUnit %}
+                         {% for unit in lectureUnit %}
+
+                                <table width="300" border="0">
+                                    <td width = "30%">{{unit.unitCode.unitCode }} </td>
+                                    <td width = "40%">{{ unit.unitCode.unitName }}</td>
+                                    <td width = "5%">{{ unit.unitCode.unitHours }}</td>
+                                    <td width = "5%"> <a href = {% url 'delete_lecture_unit' lecture.lectureId unit.unitCode.unitCode %}>delete</a></td>
+                                </table>
+
+
+                         {% endfor %}
+                    </div>
+
+                    {% concatenateString lecture.lectureId  'form' as lecUpdateForm %}
+
+                    {% data_in_context  lecUpdateForm as lecUpdateBool %}
+
+                    {% if lecUpdateBool %}
+                        <div class="subForm" id = "{{ lecture.lectureId|add:'franco' }}">
+                            <form action ={%  url 'update_lecture' lecture.lectureId %} method = "post" >
+		                        {% csrf_token %}
+                                {% getContext lecUpdateForm as aform %}
+		                        {{aform.as_p}}
+		                        <input type="submit" value="update" />
+                            </form>
+
+                            <button  onclick="hidePageElement(document.getElementById('{{ lecture.lectureId|add:'franco' }}'))">
+                            exit
+                            </button>
+                        </div>
+                    {% endif %}
+
+
+
+                {% endfor %}
+
+          {% else %}
+                <p> No lectures added to the database </p>
+          {% endif %}
+      </article>
+
+  </div>
+  <div id = "tabs-4">
+
+  	  <article class="lectureRoomArticle">
+
+      <button onclick="togglePageElementVisibility(document.getElementById('addLectureRoom'))">
+          add lecture room
+      </button>
+      <div class ="subForm" id ="addLectureRoom">
+          <form action ={% url "add_lecture_room_view" %} method = "post" >
+		       {% csrf_token %}
+		        {{addLectureRoom.as_p}}
+		        <input type="submit" value="save" />
+          </form>
+          <button  onclick="hidePageElement(document.getElementById('addLectureRoom'))">
+                            exit
+          </button>
+      </div>
+      {% if lectureRoom_information %}
+
+            <table width="491" border="0">
+                {% for lecRoom in lectureRoom_information %}
+                    <tr>
+                          <td width = '30%'>  {{ lecRoom.lectureRoom }}</td>
+                          <td width = '10%'>  {{ lecRoom.capacity }}</td>
+                          <td width = '5%'>  <a href = {%  url 'lecture_room_update_page' lecRoom.lectureRoom %}> edit </a> </td>
+                          <td width = '5%'>  <a href = {% url 'delete_lecture_room' lecRoom.lectureRoom %}> delete </a> </td>
+                    </tr>
+
+                    <tr>
+                        {% concatenateString lecRoom.lectureRoom  "updateForm" as lecture_rum_update_formName %}
+                        {% data_in_context  lecture_rum_update_formName as dataIn %}
+                        {% if dataIn %}
+
+                            <div  class = "subForm" id="{{lecRoom.lectureRoom|add:'form'}}">
+                                <form action={% url "update_lecure_room" lecRoom.lectureRoom %} method = "post">
+                                    {% getContext lecture_rum_update_formName as lecRumUpdateForm %}
+                                    {% csrf_token %}
+                                    {{ lecRumUpdateForm.as_p}}
+                                    <input type="submit" value="update" />
+                                </form>
+
+                                <button  onclick="hidePageElement(document.getElementById('{{lecRoom.lectureRoom|add:'form'}}'))">
+                                    exit
+                                </button>
+
+
+                            </div>
+                        {% endif %}
+                    </tr>
+
+                {% endfor %}
+            </table>
+          {% else %}
+                <p> No units added to the database </p>
+          {% endif %}
+      </article>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	$( "#Tabs1" ).tabs(); 
+});
+$(function() {
+	$( "#Button1" ).button({
+		label:"dmw"
+	}); 
+});
+$(function() {
+	$( "#Tabs1" ).tabs(); 
+});
+$(function() {
+	$( "#Button1" ).button(); 
+});
+$(function() {
+	$( "#Button1" ).button(); 
+});
+$(function() {
+	$( "#Button1" ).button(); 
+});
+</script>
+<p> Click <a href = {% url 'schedule'%}> here if your done entering data to schedule </p>
+</body>
+</html>

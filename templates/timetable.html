@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title> Time Table</title>
+    {% load time_manupulation %}
+</head>
+
+<body>
+{%  if schedule %}
+        <table width="491" border="2" bgcolor="#FFFFCC" >
+            <tr>
+                <td width = '30%'> unit code </td>
+                <td >  </td>
+                <td width = '40%'> Time </td>
+                <td > </td>
+                <td width = '30%'> lecture room </td>
+
+            </tr>
+            {%  for t in timetable %}
+                <tr>
+                    <td width = '30%'> {{ t.unit_id }} <td>
+
+                    {% format_time t.time as time %}
+                    <td width = '40%'> {{ time }} <td>
+
+                    <td width = '30%'> {{ t.lectureRoom }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+{% else %}
+    <p> Has failed to schedule please confirm your data if is valid </p>
+{%  endif %}
+
+</body>
+</html>

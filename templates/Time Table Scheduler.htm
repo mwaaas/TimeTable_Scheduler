@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://127.0.0.1:8000/timetable/index/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Time Table Scheduler</title>
+
+
+
+<link href="./Time Table Scheduler_files/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+<link href="./Time Table Scheduler_files/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+<link href="./Time Table Scheduler_files/jquery.ui.tabs.min.css" rel="stylesheet" type="text/css">
+<link href="./Time Table Scheduler_files/jquery.ui.button.min.css" rel="stylesheet" type="text/css">
+<link href="mwas.css" rel="stylesheet" type="text/css">
+<script src="./Time Table Scheduler_files/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="./Time Table Scheduler_files/jquery-ui-1.9.2.tabs.custom.min.js" type="text/javascript"></script>
+<script src="./Time Table Scheduler_files/jquery-ui-1.9.2.button.custom.min.js" type="text/javascript"></script>
+
+<!--
+<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.tabs.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.button.min.css" rel="stylesheet" type="text/css">
+<script src="jQueryAssets/timetable/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="jQueryAssets/jquery-ui-1.9.2.tabs.custom.min.js" type="text/javascript"></script>
+<script src="jQueryAssets/jquery-ui-1.9.2.button.custom.min.js" type="text/javascript"></script>
+-->
+</head>
+<body>
+<div class="heading">
+  <p>Just feed in the student groups , lecture and units taught information and all will be scheduled for you   </p>
+</div>
+<div id="Tabs1" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+  <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
+    <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="true"><a href="http://127.0.0.1:8000/timetable/index/#tabs-1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">Unit taught</a></li>
+    <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-2" aria-labelledby="ui-id-2" aria-selected="false"><a href="http://127.0.0.1:8000/timetable/index/#tabs-2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">Student Groups</a></li>
+    <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-3" aria-labelledby="ui-id-3" aria-selected="false"><a href="http://127.0.0.1:8000/timetable/index/#tabs-3" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">Lecturer</a></li>
+    <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-4" aria-labelledby="ui-id-4" aria-selected="false"><a href="http://127.0.0.1:8000/timetable/index/#tabs-4" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-4">Lecture room</a></li>
+  </ul>
+  <div id="tabs-1" aria-labelledby="ui-id-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false">
+    <p>
+      </p><article class="units">
+          
+   		<p>
+                	</p><p>
+                	</p><p>
+                	</p><p>
+               </p><table width="491" border="0">
+                
+                	<tbody><tr>
+                    	<td width="131" height="68">biochem110</td>
+    					<td width="120">10</td>
+    					<td width="226">introduction to biochemistry</td>
+  					</tr>
+               <tr>
+                    	<td width="131" height="68">bs 456</td>
+    					<td width="120">40</td>
+    					<td width="226">introduction to business studies</td>
+  					</tr>
+               <tr>
+                    	<td width="131" height="68">com454</td>
+    					<td width="120">54</td>
+    					<td width="226">mwas</td>
+  					</tr>
+               <tr>
+                    	<td width="131" height="68">com5667</td>
+    					<td width="120">75</td>
+    					<td width="226">computer applications</td>
+  					</tr>
+               </tbody></table>
+          
+
+      </article>
+
+ <ul>
+ <form action="http://127.0.0.1:8000/timetable/add_unit/" method="post">
+		<input type="hidden" name="csrfmiddlewaretoken" value="BrdkuFxvzkJgXXg5F8Pb7ZqMelv9MiVS">
+		<p><label for="id_unitCode">UnitCode:</label> <input id="id_unitCode" maxlength="255" name="unitCode" type="text"></p>
+<p><label for="id_unitHours">UnitHours:</label> <input id="id_unitHours" name="unitHours" type="text"></p>
+<p><label for="id_unitName">UnitName:</label> <input id="id_unitName" maxlength="255" name="unitName" type="text"></p>
+
+<<input type="submit" value="Add Unit"> 
+		
+
+ </form>
+  <button class = 'buttonStyle'  id="Button1" >Button</button>
+</ul>
+ <p></p>
+    
+  </div>
+  <div id="tabs-2" aria-labelledby="ui-id-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
+    <p>
+      </p><article class="studentGroupArticle">
+      
+                
+                		<li>compscie firs year         50  com1  <a href="http://127.0.0.1:8000/timetable/index/#">Show/Add unit taken by the
+                        {{a.groupName</a></li>
+                        
+                        <ul>
+                        	<form action="http://127.0.0.1:8000/timetable/add_group_unit/com1/" method="post">
+                        		<input type="hidden" name="csrfmiddlewaretoken" value="BrdkuFxvzkJgXXg5F8Pb7ZqMelv9MiVS">
+                        		
+                        		<input type="submit" value="Add units taken by group">
+       	</form></ul>    
+                
+          
+      </article>
+    <p></p>
+    <p>&nbsp;</p>
+    <ul>
+ <form action="http://127.0.0.1:8000/timetable/add_group/" method="post">
+		<input type="hidden" name="csrfmiddlewaretoken" value="BrdkuFxvzkJgXXg5F8Pb7ZqMelv9MiVS">
+		<p><label for="id_groupId">Group id:</label> <input id="id_groupId" maxlength="255" name="groupId" type="text"></p>
+<p><label for="id_groupCapacity">GroupCapacity:</label> <input id="id_groupCapacity" name="groupCapacity" type="text"></p>
+<p><label for="id_groupName">GroupName:</label> <input id="id_groupName" maxlength="500" name="groupName" type="text"></p>
+		<input type="submit" value="Add Group">
+</form>
+</ul>
+
+ 
+  </div>
+  <div id="tabs-3" aria-labelledby="ui-id-3" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
+    <p>
+      </p><article class="lectureArticle">
+      
+                <p> No lectures added to the database </p>
+          
+      </article>
+    <p></p>
+    <p>&nbsp;</p>
+    <ul>
+ <form action="http://127.0.0.1:8000/timetable/add_lecture/" method="post">
+		<input type="hidden" name="csrfmiddlewaretoken" value="BrdkuFxvzkJgXXg5F8Pb7ZqMelv9MiVS">
+		<p><label for="id_lectureId">LectureId:</label> <input id="id_lectureId" maxlength="255" name="lectureId" type="text"></p>
+<p><label for="id_lectureName">LectureName:</label> <input id="id_lectureName" maxlength="255" name="lectureName" type="text"></p>
+		<input type="submit" value="Add Lecturer">
+</form>
+</ul>
+  </div>
+  <div id="tabs-4" aria-labelledby="ui-id-4" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: none;">
+  	<p>
+  	  </p><article class="lectureRoomArticle">
+      
+                <p> No units added to the database </p>
+          
+      </article>
+  	<p></p>
+  	 <ul>
+ <form action="http://127.0.0.1:8000/timetable/add_lecture_room/" method="post">
+		<input type="hidden" name="csrfmiddlewaretoken" value="BrdkuFxvzkJgXXg5F8Pb7ZqMelv9MiVS">
+		
+		<input type="submit" value="Add Lecuture Room">
+</form>
+</ul>
+   </div>
+</div>
+Done entering data enter click <a href="http://127.0.0.1:8000/timetable/index/#">here</a> here to schedule timetable
+<p>what is happening</p>
+<li>this is not happening</li>
+<p>&nbsp;</p>
+
+<script type="text/javascript">
+$(function() {
+	$( "#Tabs1" ).tabs(); 
+});
+$(function() {
+	$( "#Button1" ).button({
+		label:"dmw"
+	}); 
+});
+$(function() {
+	$( "#Tabs1" ).tabs(); 
+});
+$(function() {
+	$( "#Button1" ).button(); 
+});
+$(function() {
+	$( "#Button1" ).button(); 
+});
+$(function() {
+	$( "#Button1" ).button(); 
+});
+$(function() {
+	$( "#Button1" ).button(); 
+});
+</script>
+
+</body></html>

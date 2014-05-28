@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Django default" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="a3a8dee3-8dcb-4b9e-a822-e2432bca1c4a">
+    <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+    <jdbc-url>jdbc:mysql://127.0.0.1:3306/timetable</jdbc-url>
+    <user-name>mwas</user-name>
+    <user-password>dfc7dfcbdfc6dfc1dfc3dfcbdf9cdf9f</user-password>
+    <libraries>
+      <library>
+        <url>file://</url>
+      </library>
+    </libraries>
+  </data-source>
+</component>
